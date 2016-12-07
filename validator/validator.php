@@ -104,15 +104,26 @@ validation passes, success page is displayed.
                     foreach($rules as $rule){
                         /*seperate value from the rule name*/
                         $r = preg_split('/\:/',$rule);
-                        /*check if the current field fulfils the current rule using the check()*/
-                        if(!$this->check($form_data[$field],$rule)){
-                            /*if the field fails the current rule, set_error_msg() using the 
-                            current rule string $rule,
-                            current field, $field
-                            current fields human readable name, $hr_fields
-                            current field's, current rule's error msg $usr_msg[][]
-                            */
+                       
+                        if(isset($form_data[$field])){
+                            
+                            if($r[0]==='count-max'&&((string)count($form_data[$field]))>$r[1]){
+                                $this->set_error_msg($rule,$field,$hr_fields[$i],$usr_msgs[$i][$r[0]]);
+                                break;
+                            }
+                            else if(!$this->check($form_data[$field],$rule)){
+                                /*if the field fails the current rule, set_error_msg() using the 
+                                current rule string $rule,
+                                current field, $field
+                                current fields human readable name, $hr_fields
+                                current field's, current rule's error msg $usr_msg[][]
+                                */
+                                $this->set_error_msg($rule,$field,$hr_fields[$i],$usr_msgs[$i][$r[0]]);
+                            }
+                        }
+                        else{
                             $this->set_error_msg($rule,$field,$hr_fields[$i],$usr_msgs[$i][$r[0]]);
+                            break;
                         }
                         
                     }
@@ -187,7 +198,7 @@ validation passes, success page is displayed.
                 case "type":
                     switch($r[1]){
                         case "alpha":
-                            if(preg_match('/\b[a-zA-Z]+\b/',$string)){
+                            if(preg_match('/^[a-zA-Z]+$/',$string)){
                                 return TRUE;
                             }
                             else{
@@ -195,7 +206,7 @@ validation passes, success page is displayed.
                             }
                             break;
                         case "num":
-                            if(preg_match('/\b\d+\b/',$string)){
+                            if(preg_match('/^\d+\$/',$string)){
                                 return TRUE;
                             }
                             else{
@@ -203,7 +214,7 @@ validation passes, success page is displayed.
                             }
                             break;
                         case "alphanum":
-                            if(preg_match('/\b[a-zA-Z0-9_]+\b/',$string)){
+                            if(preg_match('/^[a-zA-Z0-9_]+$/',$string)){
                                 return TRUE;
                             }
                             else{
@@ -220,6 +231,10 @@ validation passes, success page is displayed.
                             break;
                     }
                     break;
+                case "count-min":
+                    return TRUE;
+                    break; 
+
             }
         }
         protected function set_error_msg($rule,$field,$hr_field,$usr_msg){

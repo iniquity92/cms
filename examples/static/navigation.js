@@ -1,85 +1,61 @@
-var tags = {};
+var buttons = ['users','announcements','groups','events','teams'];
+var lis={};
+var control_groups={};
+var add_buttons={};
+var link_buttons={};
+
+for(var x in buttons){
+    lis[buttons[x]]={
+        tag:'li',
+        attrs:{'id':'panel_li_'+buttons[x]},
+        append_to:'#panel-list-ul'
+    };
+    control_groups[buttons[x]]={
+        tag:'div',
+        attrs:{'id':'nav_'+buttons[x],'data-role':'controlgroup','data-type':'horizontal'},
+        append_to:'#panel_li_'+buttons[x]
+    };
+    add_buttons[buttons[x]]={
+        tag:'a',
+        attrs:{'id':buttons[x]+'_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':buttons[x]+'_add_button','href':'#'},
+        append_to:'#nav_'+buttons[x]+'> .ui-controlgroup-controls'
+    };
+    link_buttons[buttons[x]]={
+        tag:'a',
+        attrs:{'id':buttons[x]+'_link_btn','class':'ui-btn ui-corner-all ui-shadow','href':'#','innerText':buttons[x].toUpperCase()},
+        append_to:'#nav_'+buttons[x]+'> .ui-controlgroup-controls'
+    };
+}
+
+
+var panels = {
+    panel_left:{
+        tag:'a',
+        attrs:{'id':'panel-left','href':'#nav-panel','data-icon':'bars','data-iconpos':'notext','innerText':'Menu'},
+        append_to:'#page-header'
+    }
+};
 
 var navigation = {
-    users:{
+    nav_panel:{
         tag:'div',
-        attrs:{'id':'nav_users','data-role':'controlgroup','data-type':'horizontal','class':'ui-controlgroup ui-controlgroup-horizontal ui-corner-all'},
-        append_to:'#navigation'
+        attrs:{'id':'nav-panel','data-role':'panel','data-display':'push','data-theme':'b'},
+        append_to:'#data-role-pg1'
     },
-    announcements:{
-        tag:'div',
-        attrs:{'id':'nav_announcements','data-role':'controlgroup','data-type':'horizontal'},
-        append_to:'#navigation'
-    },
-    groups:{
-        tag:'div',
-        attrs:{'id':'nav_groups','data-role':'controlgroup','data-type':'horizontal'},
-        append_to:'#navigation'
-    },
-    events:{
-        tag:'div',
-        attrs:{'id':'nav_events','data-role':'controlgroup','data-type':'horizontal'},
-        append_to:'#navigation'
-    },
-    teams:{
-        tag:'div',
-        attrs:{'id':'nav_teams','data-role':'controlgroup','data-type':'horizontal'},
-        append_to:'#navigation'
-    },
-    users_add_button:{
-        tag:'button',
-        attrs:{'id':'users_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':'user_add_button'},
-        append_to:'#nav_users > .ui-controlgroup-controls'
-    },
-    users_link_button:{
-        tag:'a',
-        attrs:{'id':'users_link_btn','class':'ui-btn ui-corner-all ui-shadow','href':'#','innerText':'Users'},
-        append_to:'#nav_users > .ui-controlgroup-controls'
-    },
-    announces_add_button:{
-        tag:'button',
-        attrs:{'id':'announces_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':'announces_add_button'},
-        append_to:'#nav_announcements > .ui-controlgroup-controls'
-    },
-    announces_link_button:{
-        tag:'a',
-        attrs:{'id':'announces_link_btn','class':'ui-btn ui-corner-all ui-shadow','href':'#','innerText':'Notices'},
-        append_to:'#nav_announcements > .ui-controlgroup-controls'
-    },
-    groups_add_button:{
-        tag:'button',
-        attrs:{'id':'groups_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':'groups_add_button'},
-        append_to:'#nav_groups > .ui-controlgroup-controls'
-    },
-    groups_link_button:{
-        tag:'a',
-        attrs:{'id':'groups_link_btn','class':'ui-btn ui-corner-all ui-shadow','href':'#','innerText':'Groups'},
-        append_to:'#nav_groups > .ui-controlgroup-controls'
-    },
-    events_add_button:{
-        tag:'button',
-        attrs:{'id':'events_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':'events_add_button'},
-        append_to:'#nav_events > .ui-controlgroup-controls'
-    },
-    events_link_button:{
-        tag:'a',
-        attrs:{'id':'events_link_btn','class':'ui-btn ui-corner-all ui-shadow','href':'#','innerText':'Events'},
-        append_to:'#nav_events > .ui-controlgroup-controls'
-    },
-    teams_add_button:{
-        tag:'button',
-        attrs:{'id':'teams_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':'teams_add_button'},
-        append_to:'#nav_teams > .ui-controlgroup-controls'
-    },
-    teams_link_button:{
-        tag:'a',
-        attrs:{'id':'teams_link_btn','class':'ui-btn ui-corner-all ui-shadow','href':'#','innerText':'Teams'},
-        append_to:'#nav_teams > .ui-controlgroup-controls'
-    },    
+    panel_list_ul:{
+        tag:'ul',
+        attrs:{'id':'panel-list-ul','data-role':'listview'},
+        append_to:'#nav-panel'
+    }    
 };
 
 (function(){
+    dom_builder(panels);
     dom_builder(navigation);
+    dom_builder(lis);
+    dom_builder(control_groups);
+    dom_builder(add_buttons);
+    dom_builder(link_buttons);
     
 })();
 

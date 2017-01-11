@@ -89,3 +89,33 @@ function dom_builder(L){
             append(tags[x]['tag'],tags[x]['append_to']);
     }
 }
+
+$('#data-role-pg1').on('tap','a.navigation',function(e){
+    e.preventDefault();
+    var id = e.target.id;
+    var link = $('#'+id).attr('href');
+    
+    var L = {
+        script:{
+            tag:'script',
+            attrs:{'id':'script_'+link.match(/^\#(\w+)\.\w{2}$/)[1],'src':'static/'+link.split('#')[1],'class':'current-script'},
+            append_to:'body'
+        }
+    };
+    $('.current-script').remove();
+    var c = $('#pg1').children();
+    for(x in c){
+        $('#'+c[x].id).remove();
+    }
+    dom_builder(L);
+    $('window').on('change',function(e){
+        e.preventDefault();
+        init();
+    });
+});
+
+
+
+
+	
+

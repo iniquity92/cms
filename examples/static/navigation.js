@@ -17,12 +17,12 @@ for(var x in buttons){
     };
     add_buttons[buttons[x]]={
         tag:'a',
-        attrs:{'id':buttons[x]+'_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':buttons[x]+'_add_button','href':'#'},
+        attrs:{'id':buttons[x]+'_add_btn','class':'ui-btn ui-corner-all ui-icon-plus ui-btn-icon-notext','innerText':buttons[x]+'_add_button','href':'#'+buttons[x]},
         append_to:'#nav_'+buttons[x]+'> .ui-controlgroup-controls'
     };
     link_buttons[buttons[x]]={
         tag:'a',
-        attrs:{'id':buttons[x]+'_link_btn','class':'ui-btn ui-corner-all ui-shadow','href':'#','innerText':buttons[x].toUpperCase()},
+        attrs:{'id':buttons[x]+'_link_btn','class':'ui-btn ui-corner-all ui-shadow navigation','href':'#'+buttons[x]+'.js','innerText':buttons[x].toUpperCase()},
         append_to:'#nav_'+buttons[x]+'> .ui-controlgroup-controls'
     };
 }
